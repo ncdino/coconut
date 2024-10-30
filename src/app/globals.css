@@ -1,7 +1,117 @@
+@font-face {
+  font-family: "AaHapjungsans";
+  src: url("/fonts/AaHapjungsans.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --font-pretendard: "Pretendard", sans-serif;
+  --font-league-spartan: "League Spartan", sans-serif;
+}
+
+@layer components {
+  .margin-top {
+    @apply py-72;
+  }
+
+  .input-test-border {
+    @apply border border-stone-950/30 text-gray-900 w-48;
+  }
+
+  .set-test-border {
+    @apply flex flex-col;
+  }
+
+  .logo-light {
+    @apply font-hapjung font-bold tracking-tighter text-gray-100 select-none text-2xl md:text-4xl lg:text-6xl;
+  }
+
+  .logo-dark {
+    @apply font-hapjung font-bold tracking-tighter text-gray-900 select-none text-2xl md:text-4xl lg:text-6xl;
+  }
+}
+/* Scoped styles for markdown content */
+.markdown-content {
+  @apply font-pretendard tracking-tighter;
+}
+
+.markdown-content h1 {
+  @apply text-4xl font-bold mt-8 mb-4 text-gray-800 border-b border-gray-300 pb-2;
+}
+
+.markdown-content h2 {
+  @apply text-3xl font-semibold mt-6 mb-3 text-gray-700 border-b border-gray-300 pb-1;
+}
+
+.markdown-content h3 {
+  @apply text-2xl font-semibold mt-5 mb-2 text-gray-600;
+}
+
+.markdown-content p {
+  @apply text-base leading-7 mb-4 text-gray-800;
+}
+
+.markdown-content blockquote {
+  @apply border-l-4 border-gray-300 pl-4 italic text-gray-600 mb-4;
+}
+
+.markdown-content ul {
+  @apply list-disc list-inside mb-4 text-gray-800;
+}
+
+.markdown-content ol {
+  @apply list-decimal list-inside mb-4 text-gray-800;
+}
+
+.markdown-content li {
+  @apply mb-2;
+}
+
+.markdown-content code {
+  @apply bg-gray-200 p-1 rounded font-pretendard text-sm;
+}
+
+.markdown-content pre {
+  @apply bg-gray-100 p-4 rounded overflow-x-auto my-4;
+  /* Custom scrollbar styles */
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent; /* Track color */
+}
+
+.markdown-content pre::-webkit-scrollbar {
+  width: 8px;
+}
+
+.markdown-content pre::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1; /* Thumb color */
+  border-radius: 10px;
+}
+
+.markdown-content img {
+  @apply w-[660px] h-auto rounded-lg shadow-md my-4 mx-auto;
+  display: block;
+}
+
+.markdown-content a {
+  @apply text-blue-500 underline;
+}
+
+.markdown-content a:hover {
+  @apply text-blue-700;
+}
+
+.markdown-content hr {
+  @apply border-t border-gray-300 my-4;
+}
+
+/* Add more markdown element styles here */
+
+/* 
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -24,4 +134,4 @@ body {
   .text-balance {
     text-wrap: balance;
   }
-}
+} */
