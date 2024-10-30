@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import PostsGrid from "@/components/Body/PostsGrid";
 import { fetchPosts } from "@/lib/posts";
 
-export default function travelPage() {
+export default function TravelPage() {
   const category = "travel";
 
   const {

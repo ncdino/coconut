@@ -7,7 +7,7 @@ import PostsGrid from '@/components/Body/PostsGrid';
 import { fetchPostsSuccess } from '@/store/actions/postsActions';
 import { fetchPosts } from '@/lib/posts';
 
-export default function CulturesPage() {
+export default function AllCategoryPage() {
   const category = "all";
   const dispatch = useDispatch();
   const { posts, loading, error } = useSelector((state) => state.posts);
