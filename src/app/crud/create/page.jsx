@@ -3,11 +3,11 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { addPost } from "@/lib/posts"; // Firestore에 추가하는 함수
+import { addPost } from "@/lib/posts";
 import { slugify } from "@/utils/slugify";
 import ImageUploader from "@/components/ImageUploader";
 import MarkdownRenderer from "@/components/MarkdownRenderer";
-import CustomSketchPicker from "@/components/CustomSketchPicker"; // 커스텀 컴포넌트 임포트
+import CustomSketchPicker from "@/components/CustomSketchPicker";
 import MdxImageUploader from "@/components/MdxImageUploader";
 
 import {
@@ -23,6 +23,8 @@ export default function WritePage() {
   const [content, setContent] = useState("");
   const [color, setColor] = useState("#ffffff"); // 색상 상태 추가
   const [selectedImage, setSelectedImage] = useState(null); // 이미지 상태 추가
+  const [uploadStatus, setUploadStatus] = useState(""); // 업로드 상태 추가
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false); // 성공 메시지 상태 추가
 
   const form = useSelector((state) => state.posts.form) || {}; // form의 초기값을 빈 객체로 설정
 
@@ -33,6 +35,9 @@ export default function WritePage() {
       dispatch(createPostSuccess(data));
       queryClient.invalidateQueries(["posts", form.category]);
       dispatch(resetForm());
+      setContent(""); // MDX Content 초기화
+      setShowSuccessMessage(true); // 성공 메시지 표시
+      setTimeout(() => setShowSuccessMessage(false), 3000); // 3초 후 메시지 숨기기
     },
     onError: (error) => {
       console.error("포스트 추가 실패:", error);
@@ -56,6 +61,11 @@ export default function WritePage() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     dispatch(setFormField(name, value));
+  };
+
+  const handleImageUpload = (value) => {
+    dispatch(setFormField("imageUrl", value));
+    setUploadStatus("업로드 완료"); // 업로드 완료 상태 설정
   };
 
   return (
@@ -180,9 +190,8 @@ export default function WritePage() {
             {/* Image Upload */}
             <div>
               <label htmlFor="image">Thumbnail 이미지</label>
-              <ImageUploader
-                onUpload={(value) => dispatch(setFormField("imageUrl", value))}
-              />
+              <ImageUploader onUpload={handleImageUpload} />
+              {uploadStatus && <p>{uploadStatus}</p>} {/* 업로드 상태 표시 */}
             </div>
 
             <div>
@@ -191,7 +200,7 @@ export default function WritePage() {
                 onUpload={(mdxImageUrl) =>
                   setContent(
                     (prevContent) =>
-                      `${prevContent}\n![alt text](${mdxImageUrl})`
+                      `${prevContent}\n!alt text`
                   )
                 }
               />
@@ -216,6 +225,14 @@ export default function WritePage() {
             </div>
           </div>
         </form>
+        {showSuccessMessage && (
+          <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
+            <div className="bg-white p-8 rounded shadow-lg">
+              <p>글 작성이 성공적으로 완료되었습니다!</p>
+              <button onClick={() => setShowSuccessMessage(false)}>닫기</button>
+            </div>
+          </div>
+        )}
       </main>
     </div>
   );

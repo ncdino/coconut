@@ -1,28 +1,26 @@
 const footerLinks = [
   {
     title: "GitHub",
-    href: "#",
-  },
-  {
-    title: "LinkedIn",
-    href: "#",
-  },
-  {
-    title: "Instagram",
-    href: "#",
+    href: "https://github.com/ncdino",
   },
 ];
 
 export default function Footer() {
   return (
-    <footer className="font-leagueSpartan">
-      <div className="p-8 text-white bg-black gap-2 ">
-        <span className="text-3xl tracking-tighter">COCONUT BLOG</span>
-        <nav className="flex flex-row items-center gap-1">
+    <footer className="font-pretendard">
+      <div className="flex flex-col p-8 text-white bg-black gap-3 ">
+        <span className="font-hapjung text-5xl tracking-tighter font-semibold">
+          COCONUT.
+        </span>
+        <div className="flex flex-row">
+          <p className="mr-2">이메일 | </p>
+          <a href="mailto:jahhyn@gmail.com">jahhyn@gmail.com</a>
+        </div>
+
+        <nav className="flex flex-row gap-1">
           {footerLinks.map((link) => (
             <a key={link.title} href={link.href}>
               <span>{link.title}</span>
-              <span> | </span>
             </a>
           ))}
         </nav>

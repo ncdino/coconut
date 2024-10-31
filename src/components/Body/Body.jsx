@@ -6,8 +6,6 @@ import BodyMobile from "./BodyMobile";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchPosts } from "@/lib/posts";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchPostsSuccess } from "@/store/actions/postsActions";
 
 const splitPosts = (posts) => {
   const result = [];
@@ -22,8 +20,6 @@ const splitPosts = (posts) => {
 
 export default function Body() {
   const category = "all";
-  const dispatch = useDispatch();
-  const { posts, loading, error } = useSelector((state) => state.posts);
 
   const {
     data: queryPosts,
@@ -37,16 +33,10 @@ export default function Body() {
     cacheTime: 86400000,
   });
 
-  useEffect(() => {
-    if (queryPosts) {
-      dispatch(fetchPostsSuccess(queryPosts));
-    }
-  }, [dispatch, queryPosts]);
-
   // 날짜로 정렬
-  const sortedPosts = [...posts].sort(
+  const sortedPosts = queryPosts ? [...queryPosts].sort(
     (a, b) => new Date(b.date) - new Date(a.date)
-  );
+  ) : [];
 
   const splitData = splitPosts(sortedPosts);
 
@@ -75,12 +65,8 @@ export default function Body() {
 
   let content;
 
-  if (isLoading || loading) {
-    content = <p>로딩중</p>;
-  }
-
-  if (error) {
-    content = <p>오류발생 : 리덕스 에러</p>;
+  if (isLoading) {
+    content = <p>로딩중...</p>;
   }
 
   if (isError) {
@@ -89,9 +75,7 @@ export default function Body() {
 
   return (
     <div className="relative">
-      <div>
-        <Header />
-      </div>
+      <Header />
       <div className="font-pretendard flex flex-col">
         {content}
         {isMobile ? (
@@ -131,7 +115,6 @@ export default function Body() {
         )}
         {/* 페이지네이션 */}
         <div className="flex justify-center bg-black pt-10">
-          
           {Array.from(
             { length: Math.ceil(splitData.length / postsPerPage) },
             (_, i) => (

@@ -1,16 +1,11 @@
 "use client";
 
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { useQuery } from '@tanstack/react-query';
 import PostsGrid from '@/components/Body/PostsGrid';
-import { fetchPostsSuccess } from '@/store/actions/postsActions';
 import { fetchPosts } from '@/lib/posts';
 
 export default function CulturesPage() {
   const category = "cultures";
-  const dispatch = useDispatch();
-  const { posts, loading, error } = useSelector((state) => state.posts);
 
   const { data: queryPosts, isLoading, isError, error: queryError } = useQuery({
     queryKey: ["posts", category],
@@ -19,20 +14,14 @@ export default function CulturesPage() {
     cacheTime: 86400000,
   });
 
-  useEffect(() => {
-    if (queryPosts) {
-      dispatch(fetchPostsSuccess(queryPosts));
-    }
-  }, [dispatch, queryPosts]);
-
   let content;
-  if (loading || isLoading) {
-    content = <p>isLoading</p>;
+  if (isLoading) {
+    content = <p>로딩중...</p>;
   }
 
-  if (error || isError) {
+  if (isError) {
     content = (
-      <p>is error : {error || queryError || "데이터를 가져오지 못했습니다."}</p>
+      <p>오류 발생: {queryError.message || "데이터를 가져오지 못했습니다."}</p>
     );
   }
 
@@ -45,7 +34,11 @@ export default function CulturesPage() {
       </header>
       <main>
         <div id="1">
-          {posts.length > 0 ? <PostsGrid posts={posts} /> : <p>포스트가 없습니다 </p>}
+          {queryPosts && queryPosts.length > 0 ? (
+            <PostsGrid posts={queryPosts} />
+          ) : (
+            <p>포스트가 없습니다</p>
+          )}
         </div>
       </main>
     </div>

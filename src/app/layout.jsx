@@ -4,6 +4,7 @@ import "./globals.css";
 import clsx from "clsx";
 import Header from "@/components/Header/MainHeader";
 import { Providers } from "./providers";
+import Footer from "@/components/Footer";
 
 const pretendard = localFont({
   src: "./fonts/PretendardVariable.woff2",
@@ -49,6 +50,7 @@ export default function RootLayout({ children }) {
             <Header />
           </div>
           {children}
+          <Footer />
         </Providers>
       </body>
     </html>
