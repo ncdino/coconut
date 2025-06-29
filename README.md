@@ -1,7 +1,7 @@
 
 <div align="center">
   <h1>COCONUT. (마크다운 기반 온라인 매거진 플랫폼)</h1>
-  <img src="https://ewqfysoxkdbxiitjyrgr.supabase.co/storage/v1/object/public/portfolio/Screenshot/coconutScreen.png" alt="COCONUT. 프로젝트 대표 이미지" width="700px">
+  <img src="https://ewqfysoxkdbxiitjyrgr.supabase.co/storage/v1/object/public/portfolio/Screenshot/coconut-screen1.png" alt="COCONUT. 프로젝트 대표 이미지" width="700px">
   <p>프론트엔드 학습의 첫 걸음이자, 누구나 쉽고 편하게 글을 쓰고 읽을 수 있는 경험에 집중하여 만든 온라인 매거진 서비스입니다.</p>
   
   <p>
